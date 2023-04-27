@@ -126,7 +126,11 @@ class _GroupButtonBodyState<T> extends State<GroupButtonBody<T>> {
           crossAxisAlignment: widget.crossGroupAlignment.toAxis(),
           children: buttons,
         );
-
+      case GroupingType.grid:
+        return GridView.count(
+          crossAxisCount: 2,
+          children: buttons,
+        );
       case GroupingType.wrap:
       default:
         return Wrap(
