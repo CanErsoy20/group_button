@@ -4,41 +4,43 @@ import 'package:group_button/src/group_button_item.dart';
 import 'package:group_button/src/utils/extensions/extensions.dart';
 
 class GroupButtonBody<T> extends StatefulWidget {
-  const GroupButtonBody({
-    Key? key,
-    required this.buttons,
-    required this.textAlign,
-    required this.textPadding,
-    this.controller,
-    this.onSelected,
-    this.groupingType,
-    this.onDisablePressed,
-    this.selectedBorderColor,
-    this.unselectedBorderColor,
-    this.disabledButtons = const [],
-    this.isRadio = false,
-    this.enableDeselect = false,
-    this.maxSelected,
-    this.direction,
-    this.spacing = 0.0,
-    this.runSpacing = 0.0,
-    this.selectedTextStyle,
-    this.unselectedTextStyle,
-    this.selectedColor,
-    this.unselectedColor,
-    this.borderRadius = BorderRadius.zero,
-    this.selectedShadow = const [],
-    this.unselectedShadow = const [],
-    this.buttonWidth,
-    this.buttonHeight,
-    this.mainGroupAlignment = MainGroupAlignment.center,
-    this.crossGroupAlignment = CrossGroupAlignment.center,
-    this.groupRunAlignment = GroupRunAlignment.center,
-    this.alignment,
-    this.elevation,
-    this.buttonIndexedBuilder,
-    this.buttonBuilder,
-  }) : super(key: key);
+  const GroupButtonBody(
+      {Key? key,
+      required this.buttons,
+      required this.textAlign,
+      required this.textPadding,
+      this.controller,
+      this.onSelected,
+      this.groupingType,
+      this.onDisablePressed,
+      this.selectedBorderColor,
+      this.unselectedBorderColor,
+      this.disabledButtons = const [],
+      this.isRadio = false,
+      this.enableDeselect = false,
+      this.maxSelected,
+      this.direction,
+      this.spacing = 0.0,
+      this.runSpacing = 0.0,
+      this.selectedTextStyle,
+      this.unselectedTextStyle,
+      this.selectedColor,
+      this.unselectedColor,
+      this.borderRadius = BorderRadius.zero,
+      this.selectedShadow = const [],
+      this.unselectedShadow = const [],
+      this.buttonWidth,
+      this.buttonHeight,
+      this.mainGroupAlignment = MainGroupAlignment.center,
+      this.crossGroupAlignment = CrossGroupAlignment.center,
+      this.groupRunAlignment = GroupRunAlignment.center,
+      this.alignment,
+      this.elevation,
+      this.buttonIndexedBuilder,
+      this.buttonBuilder,
+      this.childAspectRatio,
+      this.maxCrossAxisExtent})
+      : super(key: key);
 
   final List<T> buttons;
   final List<int> disabledButtons;
@@ -72,6 +74,8 @@ class GroupButtonBody<T> extends StatefulWidget {
   final GroupButtonController? controller;
   final GroupButtonIndexedBuilder? buttonIndexedBuilder;
   final GroupButtonValueBuilder<T>? buttonBuilder;
+  final double? maxCrossAxisExtent;
+  final double? childAspectRatio;
 
   @override
   State<GroupButtonBody<T>> createState() => _GroupButtonBodyState<T>();
@@ -127,8 +131,10 @@ class _GroupButtonBodyState<T> extends State<GroupButtonBody<T>> {
           children: buttons,
         );
       case GroupingType.grid:
-        return GridView.count(
-          crossAxisCount: 2,
+        return GridView.extent(
+          maxCrossAxisExtent: widget.maxCrossAxisExtent ?? 200,
+          childAspectRatio: widget.childAspectRatio ?? 5,
+          shrinkWrap: true,
           children: buttons,
         );
       case GroupingType.wrap:
